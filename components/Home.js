@@ -5,6 +5,8 @@ import { myFirebase } from './firebaseConfig';
 import HomePage from './HomePage'
 import AppNavigator from './AppNavigator'
 
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 const [value] = 'Useless Placeholder';
 
 const styles = StyleSheet.create({
@@ -24,54 +26,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class Home extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = { email:'test@mail.com',
-                        pass : 'lkjlkj',
-                        titleText : 'Transport',
-                        homePage : false,
-        }
-    }
-    btnClicked =() => {
-            firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.pass).then(result =>  {
-                Alert.alert(result.user.email)
-                Alert.alert("Logged In")
-            }).catch(error => {
-                Alert.alert(error.message)
-            })
-        }
-    onChangeText = (Text) => {
-        this.setState({email : Text})
-    }
-    onChangePass = (Text) => {
-        this.setState({pass : Text})
-    }
-    backToHome = () => {
-        this.setState({homePage : true})
-    }
+class Test extends React.Component {
     render() {
-          
         return(
             <View>
-                <Text style = {styles.loginText}>Login using Email and PassWord</Text>
-
-                <Text style = {styles.labelText}> Email : </Text>
-                <TextInput
-                    style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                    onChangeText={text => this.onChangeText(text)}
-                    value={this.state.email}
-                />
-                <Text style = {styles.labelText}> PassWord : </Text>
-                <TextInput
-                    style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                    onChangeText={text => this.onChangePass(text)}
-                    value={this.state.pass}
-                />
-                <Button title ={this.props.welcome} onPress = {this.btnClicked}/>
-                <Button title = {'Skip'} onPress = {this.backToHome} />
-                {this.state.homePage ? <AppNavigator/> : null}
+                <Button title = "Go Back to Home" onPress = {() => this.props.navigation.navigate('Home')} />
+                <Button title = "Login" onPress = {() => this.props.navigation.navigate('Login')} />
             </View>
         )
     }
-};
+}
+export default createAppContainer( createStackNavigator({
+  Test : Test,
+}));
