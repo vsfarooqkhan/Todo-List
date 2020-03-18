@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button, StyleSheet, TextInput, Alert, View, Text} from 'react-native';
+import {Button,SafeAreaView, StyleSheet, TextInput, Alert, View, Text} from 'react-native';
 import * as firebase from "firebase";
 import { myFirebase } from './firebaseConfig';
 import HomePage from './HomePage'
@@ -26,16 +26,20 @@ const styles = StyleSheet.create({
   },
 });
 
-class Test extends React.Component {
+class Login extends React.Component {
     render() {
         return(
+            <SafeAreaView>
             <View>
                 <Button title = "Go Back to Home" onPress = {() => this.props.navigation.navigate('Home')} />
+            </View>
+            <View>
                 <Button title = "Login" onPress = {() => this.props.navigation.navigate('Login')} />
             </View>
+            </SafeAreaView>
         )
     }
 }
 export default createAppContainer( createStackNavigator({
-  Test : Test,
+  Login : Login,
 }));
